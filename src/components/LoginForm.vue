@@ -14,6 +14,8 @@
 
 <script>
 import axios from 'axios'
+import router from '@/router'
+// export default router를 설정했기 때문에 '../router/index.js'라고 전체 상대경로를 써주지 않아도 됨
 
 export default {
   name: 'LoginForm',
@@ -28,6 +30,9 @@ export default {
       axios.post('http://localhost:8000/api-token-auth/', this.credentials)
       .then(res => {
         console.log(res.data.token)
+        this.$session.start()
+        this.$session.set('jwt',res.data.token)
+        router.push('/')
       })
     }
   }
